@@ -187,6 +187,11 @@
     .type-item p, .brand-item p, .managed-item p, .hardware-item p { margin:0; color:var(--muted); font-size:0.95rem; line-height:1.35 }
     .type-actions, .brand-actions, .managed-actions, .hardware-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; justify-content:flex-end }
 
+    /* Small nav inside modals */
+    .modal-nav { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; align-items:center; }
+    .modal-nav a, .modal-nav button { color:var(--muted); background:transparent; border:1px solid rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; text-decoration:none; cursor:pointer; font-weight:700; }
+    .modal-nav a:hover, .modal-nav button:hover { color:var(--text); background:rgba(255,255,255,0.02); transform:translateY(-2px); }
+
     @media (max-width:760px){
       .types-modal,.brand-modal,.managed-modal,.hardware-modal,.modal{padding:16px;max-height:92vh}
       .types-list,.brand-list,.managed-list,.hardware-list{gap:10px}
@@ -233,7 +238,7 @@
       <nav class="primary" aria-label="Primary">
         <a href="#top" class="btn-outline" title="Home">Home</a>
         <a href="#services" class="btn-outline" title="Services">Services</a>
-        <a href="about2.html" class="btn-outline" title="About">About</a>
+        <a href="#about" class="btn-outline" title="About">About</a>
 
         <button id="contact-btn" class="btn-outline" type="button" aria-haspopup="dialog" aria-controls="contact-backdrop" aria-expanded="false">Contact</button>
         <a href="contact.html" style="display:none" id="contact-page-link">Contact page</a>
@@ -349,6 +354,114 @@
 
     <div class="divider" role="separator" aria-hidden="true"></div>
 
+    <!-- About section integrated into index.html -->
+    <section id="about" aria-labelledby="about-heading" style="margin-bottom:28px">
+      <div class="container">
+        <h3 id="about-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">About Breaking Dev Lab</h3>
+        <div class="hero-card small">
+          <p style="color:var(--muted);margin:0 0 12px">
+            Breaking Dev Lab is a small, focused team building modern, secure, and elegant digital solutions.
+            We combine design, engineering, and operational best practices to deliver websites, e-commerce platforms,
+            and IT support that help businesses grow with confidence.
+          </p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <h4 style="color:var(--accent);margin:0 0 8px">Our approach</h4>
+              <p style="color:var(--muted);margin:0">We prioritize clarity, performance, and security. We design for users first and build for scale.</p>
+            </div>
+            <div>
+              <h4 style="color:var(--accent);margin:0 0 8px">What we offer</h4>
+              <p style="color:var(--muted);margin:0">Web design, e-commerce, managed hosting, hardware repairs, and support plans tailored to your needs.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+            <button class="cta-btn start-quote" data-service="about:consult" type="button">Start a Quote</button>
+            <a href="#services" class="btn-outline">View Services</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section aria-labelledby="quote-heading" style="margin-bottom:28px">
+      <div class="container">
+        <h3 id="quote-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">Request a Quote</h3>
+
+        <div class="hero-card small">
+          <form id="page-quote-form" class="form-grid" action="/api/quote" method="post" aria-label="Get a quote form" novalidate>
+            <div>
+              <label for="pq-name">Name</label>
+              <input id="pq-name" name="name" type="text" required placeholder="Your full name" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div>
+              <label for="pq-email">Email</label>
+              <input id="pq-email" name="email" type="email" required placeholder="you@example.com" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div class="full">
+              <label for="pq-project">Project summary</label>
+              <textarea id="pq-project" name="project" rows="5" placeholder="Describe your project, goals, timeline, and budget (if known)"></textarea>
+            </div>
+
+            <input type="hidden" name="selected_service" id="selected_service" value="" />
+
+            <input type="text" name="hp_page" id="hp_page" autocomplete="off" tabindex="-1" hidden aria-hidden="true" />
+
+            <div class="full form-actions">
+              <button type="submit" class="cta-btn">Request quote</button>
+            </div>
+
+            <div class="full">
+              <small style="color:var(--muted)">We respect your privacy. By submitting you agree to be contacted about your request.</small>
+            </div>
+          </form>
+
+          <div class="success-message" id="success" role="status" aria-live="polite" tabindex="-1">Thanks — your request has been received. We'll reply within 1–2 business days.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Website types modal -->
+  <div id="website-types-backdrop" class="types-backdrop" aria-hidden="true">
+    <div class="types-modal" role="dialog" aria-modal="true" aria-labelledby="website-types-title" aria-describedby="website-types-desc">
+      <header>
+        <div>
+          <h3 id="website-types-title">Types of Websites We Build</h3>
+          <p id="website-types-desc" class="lead"> <div class="hero-card small">
+          <p style="color:var(--muted);margin:0 0 12px">
+            Breaking Dev Lab is a small, focused team building modern, secure, and elegant digital solutions.
+            We combine design, engineering, and operational best practices to deliver websites, e-commerce platforms,
+            and IT support that help businesses grow with confidence.
+          </p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <h4 style="color:var(--accent);margin:0 0 8px">Our approach</h4>
+              <p style="color:var(--muted);margin:0">We prioritize clarity, performance, and security. We design for users first and build for scale.</p>
+            </div>
+            <div>
+              <h4 style="color:var(--accent);margin:0 0 8px">What we offer</h4>
+              <p style="color:var(--muted);margin:0">Web design, e-commerce, managed hosting, hardware repairs, and support plans tailored to your needs.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+            <button class="cta-btn start-quote" data-service="about:consult" type="button">Start a Quote</button>
+            <a href="#services" class="btn-outline">View Services</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
     <section aria-labelledby="quote-heading" style="margin-bottom:28px">
       <div class="container">
         <h3 id="quote-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">Request a Quote</h3>
@@ -453,6 +566,12 @@
           </div>
         </div>
       </div>
+
+      <div class="modal-nav" aria-hidden="false">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+      </div>
     </div>
   </div>
 
@@ -494,6 +613,12 @@
           </div>
         </div>
       </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+      </div>
     </div>
   </div>
 
@@ -526,6 +651,12 @@
             <button class="cta-btn start-quote" data-service="managed:maintenance" type="button">Start a Quote</button>
           </div>
         </div>
+      </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
       </div>
     </div>
   </div>
@@ -560,6 +691,12 @@
           </div>
         </div>
       </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+      </div>
     </div>
   </div>
 
@@ -593,12 +730,19 @@
           <button type="submit" class="cta-btn">Send message</button>
         </div>
       </form>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+      </div>
     </div>
   </div>
 
-  <!-- Interaction script: open modal when aria-controls points to a backdrop, otherwise go to quote -->
+  <!-- Interaction script: modal open/close, navigation from modals, and service-card behavior -->
   <script>
     (function(){
+      // Open/close helpers
       function openBackdrop(backdrop, opener) {
         if (!backdrop) return;
         backdrop.setAttribute('aria-hidden','false');
@@ -609,13 +753,23 @@
         if (focusable.length) focusable[0].focus();
         if (opener) opener._lastOpener = opener;
       }
-
       function closeBackdrop(backdrop) {
         if (!backdrop) return;
         backdrop.setAttribute('aria-hidden','true');
         document.body.style.overflow = '';
       }
 
+      // Scroll helper
+      function scrollToTarget(targetId) {
+        if (targetId === 'top') {
+          window.scrollTo({top:0, behavior:'smooth'});
+          return;
+        }
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      // Main handler for service-card buttons
       function onServiceClick(e){
         const btn = e.currentTarget;
         const serviceKey = btn.getAttribute('data-service') || '';
@@ -632,6 +786,7 @@
           }
         }
 
+        // fallback: go to quote form
         const projectField = document.getElementById('pq-project');
         if (projectField) {
           projectField.placeholder = serviceTitle
@@ -645,10 +800,12 @@
         }
       }
 
+      // Attach handler to all service-card buttons
       document.querySelectorAll('.service-card button').forEach(btn=>{
         btn.addEventListener('click', onServiceClick);
       });
 
+      // Close buttons inside modals
       document.querySelectorAll('.types-modal .btn-outline, .brand-modal .btn-outline, .managed-modal .btn-outline, .hardware-modal .btn-outline, .modal .btn-outline').forEach(closeBtn=>{
         closeBtn.addEventListener('click', function(){
           const backdrop = closeBtn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
@@ -658,6 +815,7 @@
         });
       });
 
+      // Close when clicking backdrop outside dialog
       document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(backdrop=>{
         backdrop.addEventListener('click', function(e){
           if (e.target !== backdrop) return;
@@ -667,6 +825,7 @@
         });
       });
 
+      // Start-quote buttons inside modals: close modal and scroll to quote form
       document.querySelectorAll('.start-quote').forEach(btn=>{
         btn.addEventListener('click', function(){
           const serviceKey = btn.getAttribute('data-service') || '';
@@ -682,6 +841,7 @@
         });
       });
 
+      // Contact button opener/closer
       const contactBtn = document.getElementById('contact-btn');
       if (contactBtn) {
         contactBtn.addEventListener('click', function(){
@@ -689,7 +849,6 @@
           if (backdrop) openBackdrop(backdrop, contactBtn);
         });
       }
-
       const contactClose = document.getElementById('contact-close');
       if (contactClose) {
         contactClose.addEventListener('click', function(){
@@ -699,6 +858,40 @@
         });
       }
 
+      // Modal nav buttons: scroll to Home/Services/About
+      document.querySelectorAll('.modal-nav button[data-scroll-target]').forEach(btn=>{
+        btn.addEventListener('click', function(){
+          const target = btn.getAttribute('data-scroll-target');
+          // close any open backdrop
+          const backdrop = btn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
+          if (backdrop) closeBackdrop(backdrop);
+          // scroll to target
+          scrollToTarget(target);
+          // focus the first meaningful element in the target area after a short delay
+          setTimeout(()=> {
+            if (target === 'top') {
+              const first = document.querySelector('header .brand') || document.getElementById('main');
+              if (first) first.focus && first.focus();
+            } else {
+              const el = document.getElementById(target);
+              if (el) {
+                el.setAttribute('tabindex','-1');
+                el.focus();
+                el.removeAttribute('tabindex');
+              }
+            }
+          }, 420);
+        });
+      });
+
+      // Modal nav "About" buttons (in case any are links)
+      document.querySelectorAll('.modal-nav button[data-scroll-target="about"], .modal-nav a[href="#about"]').forEach(el=>{
+        el.addEventListener('click', function(){
+          // handled above for buttons; links will navigate in-page naturally
+        });
+      });
+
+      // Form submit enhancement (show success message)
       document.querySelectorAll('form').forEach(form=>{
         form.addEventListener('submit', function(){
           const success = form.closest('.hero-card')?.querySelector('.success-message') || document.getElementById('success');
@@ -709,6 +902,7 @@
         });
       });
 
+      // Skip link behavior
       const skip = document.querySelector('.skip-link');
       if (skip) {
         skip.addEventListener('click', function(){
