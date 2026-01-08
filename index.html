@@ -266,8 +266,6 @@
         <a href="#top" class="btn-outline" title="Home">Home</a>
         <a href="#services" class="btn-outline" title="Services">Services</a>
         <a href="#about" class="btn-outline" title="About">About</a>
-
-        <!-- Contact now points to the in-page contact section (same flow as About) -->
         <a href="#contact" class="btn-outline" title="Contact">Contact</a>
       </nav>
     </div>
@@ -312,7 +310,7 @@
         </div>
 
         <div style="margin-top:16px">
-          <button id="open-quote-modal" class="btn-outline" type="button" aria-haspopup="dialog" aria-controls="quote-modal-backdrop" aria-expanded="false">Request a Quote</button>
+          <button id="open-quote-modal" class="btn-outline" type="button" aria-haspopup="dialog" aria-controls="website-types-backdrop" aria-expanded="false">Request a Quote</button>
         </div>
 
         <div id="inline-success" class="success-message" role="status" aria-live="polite" tabindex="-1">Thanks — we’ll be in touch soon. Check your email for confirmation.</div>
@@ -894,11 +892,10 @@
         });
       });
 
-      // Form submit enhancement (show success message)
+      // Contact form opener/submit handling
       document.querySelectorAll('form').forEach(form=>{
         form.addEventListener('submit', function(e){
-          // Prevent actual navigation during demo/testing if action not available
-          // Remove the next line in production if you have a working backend endpoint
+          // If you have a backend, remove the next line to allow submission.
           // e.preventDefault();
 
           const success = form.id === 'contact-page-form' ? document.getElementById('contact-success') : (form.closest('.hero-card')?.querySelector('.success-message') || document.getElementById('success'));
@@ -927,6 +924,13 @@
           const target = document.getElementById(targetId);
           if (target) {
             e.preventDefault();
+            // Close any open backdrops first
+            document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(b=>{
+              if (b.getAttribute('aria-hidden') === 'false') {
+                b.setAttribute('aria-hidden','true');
+              }
+            });
+            document.body.style.overflow = '';
             target.scrollIntoView({behavior:'smooth', block:'center'});
             history.replaceState(null, '', '#' + targetId);
             // focus for accessibility
@@ -936,6 +940,36 @@
               target.removeAttribute('tabindex');
             }, 420);
           }
+        });
+      });
+
+      // Home link handler — smooth-scroll to top and restore focus
+      document.querySelectorAll('nav.primary a[href="#top"], nav.primary a[href="/"], nav.primary a[href=""], nav.primary a[href="/index.html"]').forEach(link=>{
+        link.addEventListener('click', function(e){
+          e.preventDefault();
+          // Close any open modal/backdrop first
+          document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(b=>{
+            if (b.getAttribute('aria-hidden') === 'false') {
+              b.setAttribute('aria-hidden','true');
+            }
+          });
+          // Unlock scrolling if it was locked
+          document.body.style.overflow = '';
+
+          // Smooth scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          // After scroll, focus the brand for accessibility
+          setTimeout(() => {
+            const brand = document.querySelector('header .brand') || document.getElementById('top') || document.getElementById('main');
+            if (brand) {
+              brand.setAttribute('tabindex','-1');
+              brand.focus({ preventScroll: true });
+              brand.removeAttribute('tabindex');
+            }
+            // update URL fragment without adding history entry
+            history.replaceState(null, '', '#top');
+          }, 420);
         });
       });
 
