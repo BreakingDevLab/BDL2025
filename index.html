@@ -298,7 +298,7 @@
     </div>
   </header>
 
-<main id="main" class="container" role="main">
+  <main id="main" class="container" role="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-card" aria-describedby="hero-desc">
         <h2 id="hero-title">We build secure, elegant digital experiences</h2>
@@ -517,7 +517,7 @@
     </div>
   </div>
 
-  <!-- Brand modal (keeps original structure) -->
+  <!-- Brand modal -->
   <div id="brand-types-backdrop" class="brand-backdrop" aria-hidden="true">
     <div class="brand-modal" role="dialog" aria-modal="true" aria-labelledby="brand-types-title" aria-describedby="brand-types-desc">
       <header>
@@ -558,7 +558,7 @@
     </div>
   </div>
 
-  <!-- Managed modal (keeps original structure) -->
+  <!-- Managed modal -->
   <div id="managed-types-backdrop" class="managed-backdrop" aria-hidden="true">
     <div class="managed-modal" role="dialog" aria-modal="true" aria-labelledby="managed-types-title" aria-describedby="managed-types-desc">
       <header>
@@ -591,7 +591,7 @@
     </div>
   </div>
 
-  <!-- Hardware modal (keeps original structure) -->
+  <!-- Hardware modal -->
   <div id="hardware-types-backdrop" class="hardware-backdrop" aria-hidden="true">
     <div class="hardware-modal" role="dialog" aria-modal="true" aria-labelledby="hardware-types-title" aria-describedby="hardware-types-desc">
       <header>
@@ -624,21 +624,55 @@
     </div>
   </div>
 
-  <!-- Keep other modals (support-plans, ecommerce, quote, contact) unchanged below this point -->
+  <!-- Contact modal/backdrop -->
+  <div id="contact-backdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contact-title" aria-describedby="contact-desc">
+      <header>
+        <div>
+          <h3 id="contact-title">Contact Us</h3>
+          <p id="contact-desc" class="lead">Send a message or request a quote — we’ll reply within 1–2 business days.</p>
+        </div>
+        <div>
+          <button id="contact-close" class="btn-outline" type="button" aria-label="Close contact">Close</button>
+        </div>
+      </header>
+
+      <form id="contact-modal-form" action="/api/lead" method="post" class="form-grid" aria-label="Contact form" novalidate>
+        <div>
+          <label for="c-name">Name</label>
+          <input id="c-name" name="name" type="text" required placeholder="Your full name" />
+        </div>
+        <div>
+          <label for="c-email">Email</label>
+          <input id="c-email" name="email" type="email" required placeholder="you@example.com" />
+        </div>
+        <div class="full">
+          <label for="c-message">Message</label>
+          <textarea id="c-message" name="message" rows="5" placeholder="How can we help?"></textarea>
+        </div>
+        <div class="full form-actions">
+          <button type="submit" class="cta-btn">Send message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Keep other modals (support-plans, ecommerce, quote) unchanged below this point -->
 
   <!-- Interaction script: open modal when aria-controls points to a backdrop, otherwise go to quote -->
   <script>
     (function(){
-      // Helper: open backdrop and trap focus inside its dialog
-      function openBackdrop(backdrop) {
+      // Helper: open backdrop and focus first focusable element
+      function openBackdrop(backdrop, opener) {
         if (!backdrop) return;
         backdrop.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
         const dialog = backdrop.querySelector('[role="dialog"]');
         if (!dialog) return;
-        // focus first focusable element inside dialog
         const focusable = dialog.querySelectorAll('a,button,input,textarea,select,[tabindex]:not([tabindex="-1"])');
         if (focusable.length) focusable[0].focus();
+        // mark opener for return focus
+        if (opener) opener._lastOpener = opener;
       }
 
       // Helper: close backdrop
@@ -646,7 +680,6 @@
         if (!backdrop) return;
         backdrop.setAttribute('aria-hidden','true');
         document.body.style.overflow = '';
-        // return focus to opener if possible
       }
 
       // Main handler for service-card buttons
@@ -662,7 +695,7 @@
         if (controlsId) {
           const backdrop = document.getElementById(controlsId);
           if (backdrop && (backdrop.classList.contains('types-backdrop') || backdrop.classList.contains('brand-backdrop') || backdrop.classList.contains('managed-backdrop') || backdrop.classList.contains('hardware-backdrop') || backdrop.classList.contains('modal-backdrop'))) {
-            openBackdrop(backdrop);
+            openBackdrop(backdrop, btn);
             return; // stop here — open modal flow
           }
         }
@@ -687,7 +720,7 @@
       });
 
       // Wire modal close buttons
-      document.querySelectorAll('.types-modal .btn-outline, .brand-modal .btn-outline, .managed-modal .btn-outline, .hardware-modal .btn-outline').forEach(closeBtn=>{
+      document.querySelectorAll('.types-modal .btn-outline, .brand-modal .btn-outline, .managed-modal .btn-outline, .hardware-modal .btn-outline, .modal .btn-outline').forEach(closeBtn=>{
         closeBtn.addEventListener('click', function(){
           const backdrop = closeBtn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
           closeBackdrop(backdrop);
@@ -724,6 +757,25 @@
           }
         });
       });
+
+      // Contact button opener
+      const contactBtn = document.getElementById('contact-btn');
+      if (contactBtn) {
+        contactBtn.addEventListener('click', function(){
+          const backdrop = document.getElementById('contact-backdrop');
+          if (backdrop) openBackdrop(backdrop, contactBtn);
+        });
+      }
+
+      // Contact modal close
+      const contactClose = document.getElementById('contact-close');
+      if (contactClose) {
+        contactClose.addEventListener('click', function(){
+          const backdrop = document.getElementById('contact-backdrop');
+          closeBackdrop(backdrop);
+          if (contactBtn) contactBtn.focus();
+        });
+      }
 
       // Keep existing form submit enhancement (show success message)
       document.querySelectorAll('form').forEach(form=>{
