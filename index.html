@@ -47,7 +47,6 @@
     .brand h1{font-size:1rem;margin:0;color:#eaf9f8}
     nav.primary{display:flex;gap:12px;align-items:center}
 
-    /* Make nav links look like the contact button */
     nav.primary a, nav.primary button {
       display:inline-flex;
       align-items:center;
@@ -215,62 +214,6 @@
     }
 
     a:focus,button:focus{outline:3px solid rgba(14,165,164,0.12);outline-offset:3px;border-radius:8px}
-
-    /* === Professional polish additions (keeps your style intact) === */
-
-    /* Spacing tokens for consistent rhythm */
-    :root{
-      --space-xs:8px;
-      --space-sm:12px;
-      --space-md:20px;
-      --space-lg:32px;
-      --space-xl:48px;
-    }
-
-    /* Apply rhythm to common blocks */
-    .hero-card, .service-card, .types-modal, .hero-card.small {
-      padding: var(--space-md);
-    }
-
-    /* Slight hierarchy tweaks (no color changes) */
-    h2 { font-size:1.9rem; line-height:1.15; letter-spacing:-0.01em; }
-    h3, .section-title { font-size:1.25rem; line-height:1.2; }
-
-    /* Stabilize services grid and equalize card heights */
-    .services-grid {
-      grid-auto-rows: 1fr;
-      align-items:stretch;
-    }
-    .service-card { display:flex; flex-direction:column; justify-content:flex-start; }
-
-    /* Tighter card content spacing */
-    .service-card .media { margin-bottom: var(--space-sm); }
-    .service-card h4 { margin-bottom: 8px; }
-    .service-card p { margin-top: 0; color:var(--muted); }
-
-    /* Form consistency */
-    .form-grid input, .form-grid textarea, .lead-capture input {
-      min-height:44px; line-height:1.2; padding:10px 12px;
-    }
-    .lead-capture input { min-height:40px; }
-
-    /* Focus and accessibility polish */
-    a:focus, button:focus, input:focus, textarea:focus {
-      outline: 3px solid rgba(14,165,164,0.12);
-      outline-offset:3px;
-      border-radius:8px;
-    }
-
-    /* Modal display handling (controlled via aria-hidden) */
-    .types-backdrop[aria-hidden="false"], .modal-backdrop[aria-hidden="false"] {
-      display:flex;
-    }
-
-    /* Small responsive tweaks */
-    @media (max-width:980px){
-      .hero { grid-template-columns: 1fr; gap:20px; padding:32px 0; }
-      .hero-card { padding:18px; }
-    }
   </style>
 </head>
 
@@ -290,10 +233,10 @@
       <nav class="primary" aria-label="Primary">
         <a href="#top" class="btn-outline" title="Home">Home</a>
         <a href="#services" class="btn-outline" title="Services">Services</a>
-        <a href="About2.html" class="btn-outline" title="About">About</a>
+        <a href="about2.html" class="btn-outline" title="About">About</a>
 
         <button id="contact-btn" class="btn-outline" type="button" aria-haspopup="dialog" aria-controls="contact-backdrop" aria-expanded="false">Contact</button>
-        <a href="Contact.html" style="display:none" id="contact-page-link">Contact page</a>
+        <a href="contact.html" style="display:none" id="contact-page-link">Contact page</a>
       </nav>
     </div>
   </header>
@@ -354,9 +297,6 @@
       <h3 id="services-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">Our Services</h3>
 
       <div class="services-grid" role="list">
-        <!-- All service cards now share the same structure and behavior.
-             Each card is a button with its own data-service and aria-controls where appropriate. -->
-
         <article class="service-card" role="listitem" aria-labelledby="s1-title">
           <button id="s1-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" data-service="website-creation:business" data-service-title="Websites for Small Businesses and Enterprises" aria-haspopup="dialog" aria-controls="website-types-backdrop" aria-expanded="false">
             <span class="media" aria-hidden="true"></span>
@@ -432,7 +372,6 @@
               <textarea id="pq-project" name="project" rows="5" placeholder="Describe your project, goals, timeline, and budget (if known)"></textarea>
             </div>
 
-            <!-- Hidden field to capture which service the user clicked -->
             <input type="hidden" name="selected_service" id="selected_service" value="" />
 
             <input type="text" name="hp_page" id="hp_page" autocomplete="off" tabindex="-1" hidden aria-hidden="true" />
@@ -657,12 +596,9 @@
     </div>
   </div>
 
-  <!-- Keep other modals (support-plans, ecommerce, quote) unchanged below this point -->
-
   <!-- Interaction script: open modal when aria-controls points to a backdrop, otherwise go to quote -->
   <script>
     (function(){
-      // Helper: open backdrop and focus first focusable element
       function openBackdrop(backdrop, opener) {
         if (!backdrop) return;
         backdrop.setAttribute('aria-hidden','false');
@@ -671,18 +607,15 @@
         if (!dialog) return;
         const focusable = dialog.querySelectorAll('a,button,input,textarea,select,[tabindex]:not([tabindex="-1"])');
         if (focusable.length) focusable[0].focus();
-        // mark opener for return focus
         if (opener) opener._lastOpener = opener;
       }
 
-      // Helper: close backdrop
       function closeBackdrop(backdrop) {
         if (!backdrop) return;
         backdrop.setAttribute('aria-hidden','true');
         document.body.style.overflow = '';
       }
 
-      // Main handler for service-card buttons
       function onServiceClick(e){
         const btn = e.currentTarget;
         const serviceKey = btn.getAttribute('data-service') || '';
@@ -690,17 +623,15 @@
         const selectedInput = document.getElementById('selected_service');
         if (selectedInput) selectedInput.value = serviceKey;
 
-        // If the button has aria-controls and that element exists and is a backdrop, open it
         const controlsId = btn.getAttribute('aria-controls');
         if (controlsId) {
           const backdrop = document.getElementById(controlsId);
           if (backdrop && (backdrop.classList.contains('types-backdrop') || backdrop.classList.contains('brand-backdrop') || backdrop.classList.contains('managed-backdrop') || backdrop.classList.contains('hardware-backdrop') || backdrop.classList.contains('modal-backdrop'))) {
             openBackdrop(backdrop, btn);
-            return; // stop here — open modal flow
+            return;
           }
         }
 
-        // Fallback: scroll to quote form (legacy behavior)
         const projectField = document.getElementById('pq-project');
         if (projectField) {
           projectField.placeholder = serviceTitle
@@ -714,23 +645,19 @@
         }
       }
 
-      // Attach handler to all service-card buttons
       document.querySelectorAll('.service-card button').forEach(btn=>{
         btn.addEventListener('click', onServiceClick);
       });
 
-      // Wire modal close buttons
       document.querySelectorAll('.types-modal .btn-outline, .brand-modal .btn-outline, .managed-modal .btn-outline, .hardware-modal .btn-outline, .modal .btn-outline').forEach(closeBtn=>{
         closeBtn.addEventListener('click', function(){
           const backdrop = closeBtn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
           closeBackdrop(backdrop);
-          // return focus to opener if possible
           const opener = document.querySelector('[aria-controls="'+(backdrop && backdrop.id)+'"]');
           if (opener) opener.focus();
         });
       });
 
-      // Close when clicking backdrop outside dialog
       document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(backdrop=>{
         backdrop.addEventListener('click', function(e){
           if (e.target !== backdrop) return;
@@ -740,16 +667,13 @@
         });
       });
 
-      // Start-quote buttons inside modals should close modal and scroll to quote form
       document.querySelectorAll('.start-quote').forEach(btn=>{
         btn.addEventListener('click', function(){
           const serviceKey = btn.getAttribute('data-service') || '';
           const selectedInput = document.getElementById('selected_service');
           if (selectedInput) selectedInput.value = serviceKey;
-          // close parent backdrop if any
           const backdrop = btn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
           if (backdrop) closeBackdrop(backdrop);
-          // scroll to quote form
           const nameInput = document.getElementById('pq-name');
           if (nameInput) {
             nameInput.scrollIntoView({behavior:'smooth', block:'center'});
@@ -758,7 +682,6 @@
         });
       });
 
-      // Contact button opener
       const contactBtn = document.getElementById('contact-btn');
       if (contactBtn) {
         contactBtn.addEventListener('click', function(){
@@ -767,7 +690,6 @@
         });
       }
 
-      // Contact modal close
       const contactClose = document.getElementById('contact-close');
       if (contactClose) {
         contactClose.addEventListener('click', function(){
@@ -777,7 +699,6 @@
         });
       }
 
-      // Keep existing form submit enhancement (show success message)
       document.querySelectorAll('form').forEach(form=>{
         form.addEventListener('submit', function(){
           const success = form.closest('.hero-card')?.querySelector('.success-message') || document.getElementById('success');
@@ -788,7 +709,6 @@
         });
       });
 
-      // Small accessibility: ensure skip link works and is visible on focus
       const skip = document.querySelector('.skip-link');
       if (skip) {
         skip.addEventListener('click', function(){
@@ -799,7 +719,6 @@
     })();
   </script>
 
-  <!-- External accessibility + tiny fixes script -->
   <script src="/assets/js/tiny-fixes.js" defer></script>
 </body>
 </html>
