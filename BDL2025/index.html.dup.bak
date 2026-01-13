@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Breaking Dev Lab — Get a Quote</title>
+  <meta name="description" content="Breaking Dev Lab builds modern, secure, and elegant digital solutions — web design, e-commerce, repairs, and support." />
+  <link rel="canonical" href="https://yourdomain.example/" />
+  <meta name="robots" content="index,follow" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:;">
+
+  <style>
+    :root{
+      --max-width:1100px;
+      --accent:#0ea5a4;
+      --accent-2:#0b8790;
+      --muted:#bfc7cc;
+      --text:#e9f1f4;
+      --panel:#071018;
+      --glass-border:rgba(255,255,255,0.04);
+      --radius:12px;
+      --card-shadow:0 10px 30px rgba(2,6,23,0.6);
+    }
+
+    html{box-sizing:border-box;scroll-behavior:smooth}
+    *,*::before,*::after{box-sizing:inherit}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,system-ui,-apple-system,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,rgba(6,6,8,0.86),rgba(6,6,8,0.86)),url('/images/tech_bg.jpg') center/cover fixed no-repeat;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:1000;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(8,10,12,0.6),rgba(8,10,12,0.35));border-bottom:1px solid var(--glass-border)}
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--accent)}
+    .brand .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:inline-grid;place-items:center;font-weight:800;color:#042022}
+    .brand h1{font-size:1rem;margin:0;color:#eaf9f8}
+    nav.primary{display:flex;gap:12px;align-items:center}
+
+    /* Make nav links look like the contact button */
+    nav.primary a, nav.primary button {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:700;
+      color:var(--muted);
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.04);
+      text-decoration:none;
+      cursor:pointer;
+      transition:transform .12s ease, color .12s ease, background .12s ease;
+    }
+    nav.primary a:hover, nav.primary a:focus, nav.primary button:hover, nav.primary button:focus {
+      transform:translateY(-2px);
+      color:var(--text);
+      background:rgba(255,255,255,0.02);
+    }
+    nav.primary a[aria-current="page"], nav.primary button[aria-current="page"] {
+      color:var(--text);
+      background:rgba(255,255,255,0.03);
+      border-color:rgba(255,255,255,0.06);
+    }
+
+    /* Hero */
+    .hero{padding:64px 0 48px;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:var(--radius);padding:28px;border:1px solid var(--glass-border);box-shadow:var(--card-shadow)}
+    .hero h2{margin:0 0 12px;color:var(--accent);font-size:2rem}
+    .hero p.lead{color:var(--muted);margin:0 0 18px;font-size:1.02rem}
+
+    /* Buttons (business look) */
+    .cta-btn {
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 18px;border-radius:10px;font-weight:700;
+      color:#042022;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border:0;cursor:pointer;text-decoration:none;box-shadow:0 8px 30px rgba(11,135,144,0.12);
+      transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    }
+    .cta-btn:hover,.cta-btn:focus{transform:translateY(-3px);box-shadow:0 18px 50px rgba(11,135,144,0.14);filter:brightness(1.02)}
+    .cta-btn:active{transform:translateY(-1px);box-shadow:0 8px 20px rgba(11,135,144,0.08)}
+    .cta-btn .icon{width:18px;height:18px;display:inline-block}
+
+    .btn-outline {
+      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-weight:700;
+      color:var(--muted);background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer;
+      transition:transform .12s ease, color .12s ease, background .12s ease;
+    }
+    .btn-outline:hover,.btn-outline:focus{transform:translateY(-2px);color:var(--text);background:rgba(255,255,255,0.02)}
+
+    /* Lead capture */
+    .lead-capture{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+    .lead-capture input[type="text"],.lead-capture input[type="email"]{
+      background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:10px 12px;border-radius:8px;flex:1;min-width:0
+    }
+    .lead-capture button{min-width:160px}
+
+    /* Highlights */
+    .highlights{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+    .highlight{background:var(--panel);border-radius:10px;padding:10px 12px;display:flex;gap:12px;align-items:center;border:1px solid rgba(255,255,255,0.02)}
+    .highlight svg{width:22px;height:22px;color:var(--accent)}
+
+    /* Visual */
+    .hero-visual{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 60px rgba(2,6,10,0.6)}
+    .hero-visual img{display:block;width:100%;height:auto}
+
+    /* Services: responsive auto-fit grid and consistent cards */
+    .services{margin:36px 0 24px}
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:22px;
+      align-items:start;
+      width:100%;
+      margin-top:18px;
+    }
+
+    /* Card layout */
+    .service-card{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      border-radius:10px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 8px 30px rgba(0,0,0,0.35);
+      min-height:320px;
+      transition:transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease;
+    }
+    .service-card:hover{ transform:translateY(-8px); box-shadow:0 20px 60px rgba(0,0,0,0.45); }
+
+    .service-card .media{
+      width:100%;
+      height:160px;
+      overflow:hidden;
+      border-radius:8px;
+      background:#071018;
+      display:block;
+    }
+    .service-card .media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .service-card h4{margin:0;color:var(--accent);font-size:1.05rem}
+    .service-card p{margin:0;color:var(--muted);font-size:0.98rem}
+
+    @media (max-width:760px){
+      .services-grid{gap:16px}
+      .service-card{min-height:auto}
+      .service-card .media{height:180px}
+      .hero{grid-template-columns:1fr;gap:20px;padding:36px 0}
+    }
+
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(11,135,144,0.06),transparent);margin:28px 0}
+
+    /* Quote form */
+    .hero-card.small{padding:18px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-grid .full{grid-column:1/-1}
+    .form-grid input, .form-grid textarea, .form-grid select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text)}
+    .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    .success-message{background:linear-gradient(90deg,rgba(14,165,164,0.06),rgba(11,135,144,0.03));padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);color:#e9fbff;margin-top:12px;display:none}
+    .field-error{color:#ffb4b4;font-size:13px;margin-top:6px;display:none}
+    input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]{box-shadow:0 0 0 3px rgba(255,80,80,0.08);border-color:#ff8b8b}
+
+    /* Modal styles (opaque, readable) */
+    .types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop {
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200; background:rgba(2,6,10,0.78); padding:20px;
+    }
+    .types-modal, .brand-modal, .managed-modal, .hardware-modal, .modal {
+      width:100%; max-width:880px; border-radius:12px; padding:22px; background:linear-gradient(180deg,var(--panel),#0b1114); border:1px solid rgba(255,255,255,0.04); box-shadow:0 40px 120px rgba(0,0,0,0.7); color:var(--text); max-height:86vh; overflow:auto;
+    }
+    .types-modal header, .brand-modal header, .managed-modal header, .hardware-modal header, .modal header { display:flex; align-items:flex-start; gap:12px; justify-content:space-between }
+    .types-modal h3, .brand-modal h3, .managed-modal h3, .hardware-modal h3, .modal h3 { margin:0; font-size:1.25rem; color:var(--accent) }
+    .types-modal p.lead, .brand-modal p.lead, .managed-modal p.lead, .hardware-modal p.lead, .modal p.lead { margin:8px 0 0; color:var(--muted); font-size:0.98rem }
+    .types-list, .brand-list, .managed-list, .hardware-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:16px }
+    .type-item, .brand-item, .managed-item, .hardware-item { background:#071018; padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.03) }
+    .type-item h5, .brand-item h5, .managed-item h5, .hardware-item h5 { margin:0 0 8px; color:var(--accent); font-size:1rem }
+    .type-item p, .brand-item p, .managed-item p, .hardware-item p { margin:0; color:var(--muted); font-size:0.95rem; line-height:1.35 }
+    .type-actions, .brand-actions, .managed-actions, .hardware-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; justify-content:flex-end }
+
+    @media (max-width:760px){
+      .types-modal,.brand-modal,.managed-modal,.hardware-modal,.modal{padding:16px;max-height:92vh}
+      .types-list,.brand-list,.managed-list,.hardware-list{gap:10px}
+    }
+
+    /* Skip link */
+    .skip-link{
+      position:absolute;
+      left:-9999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:12px;
+      top:12px;
+      width:auto;
+      height:auto;
+      padding:8px 12px;
+      background:#042022;
+      color:var(--text);
+      border-radius:6px;
+      z-index:2000;
+    }
+
+    a:focus,button:focus{outline:3px solid rgba(14,165,164,0.12);outline-offset:3px;border-radius:8px}
+  </style>
+</head>
+
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <div class="container nav-wrap" role="navigation" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Breaking Dev Lab home">
+        <span class="logo">BD</span>
+        <div>
+          <h1>Breaking Dev Lab</h1>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Modern digital solutions</div>
+        </div>
+      </a>
+
+      <nav class="primary" aria-label="Primary">
+        <a href="#top" class="btn-outline" title="Home">Home</a>
+        <a href="#services" class="btn-outline" title="Services">Services</a>
+        <a href="about2.html" class="btn-outline" title="About">About</a>
+
+        <button id="contact-btn" class="btn-outline" type="button" aria-haspopup="dialog" aria-controls="contact-backdrop" aria-expanded="false">Contact</button>
+        <a href="/contact" style="display:none" id="contact-page-link">Contact page</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card" aria-describedby="hero-desc">
+        <h2 id="hero-title">We build secure, elegant digital experiences</h2>
+        <p id="hero-desc" class="lead">Breaking Dev Lab crafts modern websites, e-commerce platforms, and reliable repair & support services that help businesses grow with confidence.</p>
+
+        <form id="inline-lead-form" class="lead-capture" aria-label="Quick contact form" action="/api/lead" method="post" novalidate>
+          <input type="text" name="name" id="inline-name" placeholder="Your name" aria-label="Your name" required />
+          <div class="field-error" aria-live="polite"></div>
+
+          <input type="email" name="contact" id="inline-email" placeholder="Email or phone" aria-label="Email or phone" required />
+          <div class="field-error" aria-live="polite"></div>
+
+          <input type="text" name="hp_inline" id="hp_inline" autocomplete="off" tabindex="-1" hidden aria-hidden="true" />
+
+          <button type="submit" class="cta-btn" aria-label="Request a free consult">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="18" height="18"><path d="M3 12h18" stroke="#042022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Get a Free Consult
+          </button>
+        </form>
+
+        <div class="highlights" aria-hidden="false">
+          <div class="highlight">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><strong style="display:block;color:#eaf9f8">Tailored solutions</strong><small style="color:var(--muted)">Designs that match your brand</small></div>
+          </div>
+
+          <div class="highlight">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><strong style="display:block;color:#eaf9f8">Reliable support</strong><small style="color:var(--muted)">Hardware & software expertise</small></div>
+          </div>
+
+          <div class="highlight">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><strong style="display:block;color:#eaf9f8">Secure by design</strong><small style="color:var(--muted)">Best practices & modern tooling</small></div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <button id="open-quote-modal" class="btn-outline" type="button" aria-haspopup="dialog" aria-controls="quote-modal-backdrop" aria-expanded="false">Request a Quote</button>
+        </div>
+
+        <div id="inline-success" class="success-message" role="status" aria-live="polite" tabindex="-1">Thanks — we’ll be in touch soon. Check your email for confirmation.</div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <img src="is_web_development_good_career.avif" alt="Modern tech workspace with code on screen" loading="lazy" width="420" height="320" />
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section id="services" class="services" aria-labelledby="services-heading">
+      <h3 id="services-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">Our Services</h3>
+
+      <div class="services-grid" role="list">
+        <article class="service-card" role="listitem" aria-labelledby="s1-title">
+          <button id="website-types-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" aria-haspopup="dialog" aria-controls="website-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true">
+              <img src="is_web_development_good_career.avif" alt="Websites for businesses" loading="lazy" width="800" height="450" />
+            </span>
+            <h4 id="s1-title">Websites for Small Businesses and Enterprises</h4>
+            <p>We design and build fast, mobile-first websites that convert visitors into customers — tailored to your brand and ready to scale as you grow.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s3-title">
+          <button id="brand-types-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" aria-haspopup="dialog" aria-controls="brand-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true">
+              <img src="25579871_webdesign2.jpg" alt="Brand and UX design" loading="lazy" width="800" height="450" />
+            </span>
+            <h4 id="s3-title">Brand & UX Design</h4>
+            <p>Craft a memorable brand and intuitive user experience that builds trust, reduces friction, and increases conversions across devices.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s4-title">
+          <button id="managed-types-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" aria-haspopup="dialog" aria-controls="managed-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true">
+              <img src="photo-1588632901974-5ae3618d967b.jpg" alt="Managed hosting and support" loading="lazy" width="800" height="450" />
+            </span>
+            <h4 id="s4-title">Managed Hosting & Maintenance</h4>
+            <p>Keep your site fast and secure with managed hosting, automated backups, and proactive maintenance so you can focus on your business.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s5-title">
+          <button id="hardware-types-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" aria-haspopup="dialog" aria-controls="hardware-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true">
+              <img src="46988.jpg" alt="Hardware repairs and on-site support" loading="lazy" width="800" height="450" />
+            </span>
+            <h4 id="s5-title">Hardware Repairs & On‑site Support</h4>
+            <p>Fast, professional repairs and on‑site technical support for laptops, desktops and small office networks — minimal downtime guaranteed.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s6-title">
+          <a href="support-plans.html" style="color:inherit;text-decoration:none;">
+            <span class="media" aria-hidden="true">
+              <img src="support-plan.jpg" alt="Support plans for businesses" loading="lazy" width="800" height="450" />
+            </span>
+            <h4 id="s6-title">Support Plans for Businesses</h4>
+            <p>Choose a support plan that fits your needs — priority response, regular updates, and strategic IT guidance to keep operations running smoothly.</p>
+          </a>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s2-title">
+          <a href="ecommerce.html" style="color:inherit;text-decoration:none;">
+            <span class="media" aria-hidden="true">
+              <img src="ecommerce-arrow.jpg" alt="E-commerce solutions" loading="lazy" width="800" height="450" />
+            </span>
+            <h4 id="s2-title">E‑commerce Solutions</h4>
+            <p>Launch a secure, conversion‑focused online store with smooth checkout, payment integrations, and tools to grow your sales quickly.</p>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section aria-labelledby="quote-heading" style="margin-bottom:28px">
+      <div class="container">
+        <h3 id="quote-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">Request a Quote</h3>
+
+        <div class="hero-card small">
+          <form id="page-quote-form" class="form-grid" action="/api/quote" method="post" aria-label="Get a quote form" novalidate>
+            <div>
+              <label for="pq-name">Name</label>
+              <input id="pq-name" name="name" type="text" required placeholder="Your full name" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div>
+              <label for="pq-email">Email</label>
+              <input id="pq-email" name="email" type="email" required placeholder="you@example.com" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div class="full">
+              <label for="pq-project">Project summary</label>
+              <textarea id="pq-project" name="project" rows="5" placeholder="Describe your project, goals, timeline, and budget (if known)"></textarea>
+            </div>
+
+            <input type="text" name="hp_page" id="hp_page" autocomplete="off" tabindex="-1" hidden aria-hidden="true" />
+
+            <div class="full form-actions">
+              <button type="submit" class="cta-btn">Request quote</button>
+            </div>
+
+            <div class="full">
+              <small style="color:var(--muted)">We respect your privacy. By submitting you agree to be contacted about your request.</small>
+            </div>
+          </form>
+
+          <div class="success-message" id="success" role="status" aria-live="polite" tabindex="-1">Thanks — your request has been received. We'll reply within 1–2 business days.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Website types modal -->
+  <div id="website-types-backdrop" class="types-backdrop" aria-hidden="true">
+    <div class="types-modal" role="dialog" aria-modal="true" aria-labelledby="website-types-title" aria-describedby="website-types-desc">
+      <header>
+        <div>
+          <h3 id="website-types-title">Types of Websites We Build</h3>
+          <p id="website-types-desc" class="lead">Choose the website type that best matches your business. Click "Start a Quote" to request a tailored estimate.</p>
+        </div>
+        <div>
+          <button id="website-types-close" class="btn-outline" type="button" aria-label="Close website types">Close</button>
+        </div>
+      </header>
+
+      <div class="types-list" role="list">
+        <div class="type-item" role="listitem">
+          <h5>Small Business Brochure Sites</h5>
+          <p>Simple, elegant sites to showcase services, hours, and contact details — fast to launch and easy to update.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:small" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Lead Generation & Marketing Sites</h5>
+          <p>Conversion-focused landing pages and multi-page sites built to capture leads and drive campaigns.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:lead-gen" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>E‑commerce & Online Stores</h5>
+          <p>Secure stores with optimized checkout, inventory, and payment integrations for small shops to large catalogs.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="ecommerce" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>SaaS & Product Landing Pages</h5>
+          <p>High-performance landing pages and marketing funnels for SaaS, apps, and product launches.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:saaS" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Enterprise & Multi‑site Platforms</h5>
+          <p>Scalable, secure platforms with multi-site management, SSO, integrations and enterprise-grade SLAs.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:enterprise" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Headless CMS & PWAs</h5>
+          <p>Flexible headless architectures and progressive web apps for fast, future-proof digital experiences.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:headless" type="button">Start a Quote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keep other modals (brand, managed, hardware, quote, contact) unchanged below this point -->
+
+  <!-- External accessibility + tiny fixes script (host at /assets/js/tiny-fixes.js) -->
+  <script src="/assets/js/tiny-fixes.js" defer></script>
+  <script src="/assets/js/tiny-fixes.js" defer></script>
+</body>
+</html>

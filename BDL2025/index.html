@@ -1,0 +1,1223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Breaking Dev Lab — Get a Quote</title>
+  <meta name="description" content="Breaking Dev Lab builds modern, secure, and elegant digital solutions — web design, e-commerce, repairs, and support." />
+  <link rel="canonical" href="https://yourdomain.example/" />
+  <meta name="robots" content="index,follow" />
+  <link rel="icon" href="/assets/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:;">
+
+  <style>
+    :root{
+      --max-width:1100px;
+      --accent:#0ea5a4;
+      --accent-2:#0b8790;
+      --muted:#bfc7cc;
+      --text:#e9f1f4;
+      --panel:#071018;
+      --glass-border:rgba(255,255,255,0.04);
+      --radius:12px;
+      --card-shadow:0 10px 30px rgba(2,6,23,0.6);
+    }
+
+    html{box-sizing:border-box;scroll-behavior:smooth}
+    *,*::before,*::after{box-sizing:inherit}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,system-ui,-apple-system,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,rgba(6,6,8,0.86),rgba(6,6,8,0.86)),url('/assets/images/tech_bg.jpg') center/cover fixed no-repeat;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:1000;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(8,10,12,0.6),rgba(8,10,12,0.35));border-bottom:1px solid var(--glass-border)}
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--accent)}
+    .brand .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:inline-grid;place-items:center;font-weight:800;color:#042022}
+    .brand h1{font-size:1rem;margin:0;color:#eaf9f8}
+    nav.primary{display:flex;gap:12px;align-items:center}
+
+    nav.primary a, nav.primary button {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:700;
+      color:var(--muted);
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.04);
+      text-decoration:none;
+      cursor:pointer;
+      transition:transform .12s ease, color .12s ease, background .12s ease;
+    }
+    nav.primary a:hover, nav.primary a:focus, nav.primary button:hover, nav.primary button:focus {
+      transform:translateY(-2px);
+      color:var(--text);
+      background:rgba(255,255,255,0.02);
+    }
+    nav.primary a[aria-current="page"], nav.primary button[aria-current="page"] {
+      color:var(--text);
+      background:rgba(255,255,255,0.03);
+      border-color:rgba(255,255,255,0.06);
+    }
+
+    /* Hero */
+    .hero{padding:64px 0 48px;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:var(--radius);padding:28px;border:1px solid var(--glass-border);box-shadow:var(--card-shadow)}
+    .hero h2{margin:0 0 12px;color:var(--accent);font-size:2rem}
+    .hero p.lead{color:var(--muted);margin:0 0 18px;font-size:1.02rem}
+
+    /* Buttons (business look) */
+    .cta-btn {
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 18px;border-radius:10px;font-weight:700;
+      color:#042022;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border:0;cursor:pointer;text-decoration:none;box-shadow:0 8px 30px rgba(11,135,144,0.12);
+      transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    }
+    .cta-btn:hover,.cta-btn:focus{transform:translateY(-3px);box-shadow:0 18px 50px rgba(11,135,144,0.14);filter:brightness(1.02)}
+    .cta-btn:active{transform:translateY(-1px);box-shadow:0 8px 20px rgba(11,135,144,0.08)}
+    .cta-btn .icon{width:18px;height:18px;display:inline-block}
+
+    .btn-outline {
+      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-weight:700;
+      color:var(--muted);background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer;
+      transition:transform .12s ease, color .12s ease, background .12s ease;
+    }
+    .btn-outline:hover,.btn-outline:focus{transform:translateY(-2px);color:var(--text);background:rgba(255,255,255,0.02)}
+
+    /* Lead capture */
+    .lead-capture{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+    .lead-capture input[type="text"],.lead-capture input[type="email"]{
+      background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:10px 12px;border-radius:8px;flex:1;min-width:0
+    }
+    .lead-capture button{min-width:160px}
+
+    /* Highlights */
+    .highlights{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+    .highlight{background:var(--panel);border-radius:10px;padding:10px 12px;display:flex;gap:12px;align-items:center;border:1px solid rgba(255,255,255,0.02)}
+    .highlight svg{width:22px;height:22px;color:var(--accent)}
+
+    /* Visual (no external images) */
+    .hero-visual{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 60px rgba(2,6,10,0.6);display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));color:var(--muted);padding:28px}
+    .hero-visual .visual-placeholder{width:100%;height:100%;min-height:180px;display:flex;align-items:center;justify-content:center;font-size:0.95rem}
+
+    /* Services: responsive auto-fit grid and consistent cards */
+    .services{margin:36px 0 24px}
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:22px;
+      align-items:start;
+      width:100%;
+      margin-top:18px;
+    }
+
+    /* Card layout */
+    .service-card{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      border-radius:10px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 8px 30px rgba(0,0,0,0.35);
+      min-height:320px;
+      transition:transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease;
+    }
+    .service-card:hover{ transform:translateY(-8px); box-shadow:0 20px 60px rgba(0,0,0,0.45); }
+
+    .service-card .media{
+      width:100%;
+      height:160px;
+      overflow:hidden;
+      border-radius:8px;
+      background:linear-gradient(180deg,#071018,#0b1114);
+      display:block;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.01);
+    }
+
+    .service-card h4{margin:0;color:var(--accent);font-size:1.05rem}
+    .service-card p{margin:0;color:var(--muted);font-size:0.98rem}
+
+    @media (max-width:760px){
+      .services-grid{gap:16px}
+      .service-card{min-height:auto}
+      .service-card .media{height:180px}
+      .hero{grid-template-columns:1fr;gap:20px;padding:36px 0}
+    }
+
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(11,135,144,0.06),transparent);margin:28px 0}
+
+    /* Quote form */
+    .hero-card.small{padding:18px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-grid .full{grid-column:1/-1}
+    .form-grid input, .form-grid textarea, .form-grid select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text)}
+    .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    .success-message{background:linear-gradient(90deg,rgba(14,165,164,0.06),rgba(11,135,144,0.03));padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);color:#e9fbff;margin-top:12px;display:none}
+    .field-error{color:#ffb4b4;font-size:13px;margin-top:6px;display:none}
+    input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"]{box-shadow:0 0 0 3px rgba(255,80,80,0.08);border-color:#ff8b8b}
+
+    /* Modal styles (opaque, readable) */
+    .types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop {
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2200; background:rgba(2,6,10,0.78); padding:20px;
+    }
+
+    /* show/hide backdrops using aria-hidden */
+    .types-backdrop[aria-hidden="false"],
+    .brand-backdrop[aria-hidden="false"],
+    .managed-backdrop[aria-hidden="false"],
+    .hardware-backdrop[aria-hidden="false"],
+    .modal-backdrop[aria-hidden="false"] {
+      display: flex;
+    }
+
+    .types-backdrop[aria-hidden="true"],
+    .brand-backdrop[aria-hidden="true"],
+    .managed-backdrop[aria-hidden="true"],
+    .hardware-backdrop[aria-hidden="true"],
+    .modal-backdrop[aria-hidden="true"] {
+      display: none;
+    }
+
+    .types-modal, .brand-modal, .managed-modal, .hardware-modal, .modal {
+      width:100%; max-width:880px; border-radius:12px; padding:22px; background:linear-gradient(180deg,var(--panel),#0b1114); border:1px solid rgba(255,255,255,0.04); box-shadow:0 40px 120px rgba(0,0,0,0.7); color:var(--text); max-height:86vh; overflow:auto;
+    }
+    .types-modal header, .brand-modal header, .managed-modal header, .hardware-modal header, .modal header { display:flex; align-items:flex-start; gap:12px; justify-content:space-between }
+    .types-modal h3, .brand-modal h3, .managed-modal h3, .hardware-modal h3, .modal h3 { margin:0; font-size:1.25rem; color:var(--accent) }
+    .types-modal p.lead, .brand-modal p.lead, .managed-modal p.lead, .hardware-modal p.lead, .modal p.lead { margin:8px 0 0; color:var(--muted); font-size:0.98rem }
+    .types-list, .brand-list, .managed-list, .hardware-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:16px }
+    .type-item, .brand-item, .managed-item, .hardware-item { background:#071018; padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.03) }
+    .type-item h5, .brand-item h5, .managed-item h5, .hardware-item h5 { margin:0 0 8px; color:var(--accent); font-size:1rem }
+    .type-item p, .brand-item p, .managed-item p, .hardware-item p { margin:0; color:var(--muted); font-size:0.95rem; line-height:1.35 }
+    .type-actions, .brand-actions, .managed-actions, .hardware-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; justify-content:flex-end }
+
+    /* Small nav inside modals */
+    .modal-nav { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; align-items:center; }
+    .modal-nav a, .modal-nav button { color:var(--muted); background:transparent; border:1px solid rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; text-decoration:none; cursor:pointer; font-weight:700; }
+    .modal-nav a:hover, .modal-nav button:hover { color:var(--text); background:rgba(255,255,255,0.02); transform:translateY(-2px); }
+
+    /* About-specific styles (from About2.html) */
+    .about-hero{padding:56px 0}
+    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+    .hero-copy h1{color:var(--accent);margin:0 0 8px;font-size:2rem}
+    .lead{color:var(--muted);margin:0 0 18px;font-size:1.02rem}
+    .hero-media img{width:100%;border-radius:10px;object-fit:cover;display:block;box-shadow:var(--card-shadow)}
+
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+    .values-grid article{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+    .values-grid h3{margin:0 0 8px;color:var(--accent)}
+
+    .trust{padding:18px 0}
+    .trust-logos{display:flex;gap:18px;align-items:center;opacity:.95;margin-bottom:12px}
+    .trust-logos img{height:36px;object-fit:contain;filter:grayscale(1) opacity(.9)}
+    .testimonial{margin:0;color:var(--muted);font-style:italic}
+
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:12px}
+    .final-cta{display:flex;justify-content:center;padding:28px 0}
+
+    /* Contact section styles */
+    .contact-section { padding:48px 0; }
+    .contact-grid { display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:start; }
+    .contact-card { background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)); padding:20px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); }
+    .contact-card label { display:block; margin-bottom:6px; color:var(--muted); font-weight:600; }
+    .contact-card input, .contact-card textarea { width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:rgba(255,255,255,0.02); color:var(--text); }
+    .contact-info { color:var(--muted); font-size:0.98rem; line-height:1.5; }
+
+    @media (max-width:960px){
+      .hero-grid, .contact-grid { grid-template-columns:1fr; }
+      .values-grid{grid-template-columns:1fr}
+    }
+
+    /* Skip link */
+    .skip-link{
+      position:absolute;
+      left:-9999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:12px;
+      top:12px;
+      width:auto;
+      height:auto;
+      padding:8px 12px;
+      background:#042022;
+      color:var(--text);
+      border-radius:6px;
+      z-index:2000;
+    }
+
+    a:focus,button:focus{outline:3px solid rgba(14,165,164,0.12);outline-offset:3px;border-radius:8px}
+  </style>
+</head>
+
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <div class="container nav-wrap" role="navigation" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Breaking Dev Lab home">
+        <span class="logo">BD</span>
+        <div>
+          <h1>Breaking Dev Lab</h1>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Modern digital solutions</div>
+        </div>
+      </a>
+
+      <nav class="primary" aria-label="Primary">
+        <a href="#top" class="btn-outline" title="Home">Home</a>
+        <a href="#services" class="btn-outline" title="Services">Services</a>
+        <a href="#about" class="btn-outline" title="About">About</a>
+        <a href="#contact" class="btn-outline" title="Contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card" aria-describedby="hero-desc">
+        <h2 id="hero-title">We build secure, elegant digital experiences</h2>
+        <p id="hero-desc" class="lead">Breaking Dev Lab crafts modern websites, e-commerce platforms, and reliable repair & support services that help businesses grow with confidence.</p>
+
+        <form id="inline-lead-form" class="lead-capture" aria-label="Quick contact form" action="/api/lead" method="post" novalidate>
+          <input type="text" name="name" id="inline-name" placeholder="Your name" aria-label="Your name" required />
+          <div class="field-error" aria-live="polite"></div>
+
+          <input type="email" name="contact" id="inline-email" placeholder="Email or phone" aria-label="Email or phone" required />
+          <div class="field-error" aria-live="polite"></div>
+
+          <input type="text" name="hp_inline" id="hp_inline" autocomplete="off" tabindex="-1" hidden aria-hidden="true" />
+
+          <button type="submit" class="cta-btn" aria-label="Request a free consult">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="18" height="18"><path d="M3 12h18" stroke="#042022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Get a Free Consult
+          </button>
+        </form>
+
+        <div class="highlights" aria-hidden="false">
+          <div class="highlight">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><strong style="display:block;color:#eaf9f8">Tailored solutions</strong><small style="color:var(--muted)">Designs that match your brand</small></div>
+          </div>
+
+          <div class="highlight">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><strong style="display:block;color:#eaf9f8">Reliable support</strong><small style="color:var(--muted)">Hardware & software expertise</small></div>
+          </div>
+
+          <div class="highlight">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <div><strong style="display:block;color:#eaf9f8">Secure by design</strong><small style="color:var(--muted)">Best practices & modern tooling</small></div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <button id="open-quote-modal" class="btn-outline" type="button" aria-haspopup="dialog" aria-controls="website-types-backdrop" aria-expanded="false">Request a Quote</button>
+        </div>
+
+        <div id="inline-success" class="success-message" role="status" aria-live="polite" tabindex="-1">Thanks — we’ll be in touch soon. Check your email for confirmation.</div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-placeholder" aria-hidden="true">Visual area (background image retained)</div>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section id="services" class="services" aria-labelledby="services-heading">
+      <h3 id="services-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">Our Services</h3>
+
+      <div class="services-grid" role="list">
+        <article class="service-card" role="listitem" aria-labelledby="s1-title">
+          <button id="s1-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" data-service="website-creation:business" data-service-title="Websites for Small Businesses and Enterprises" aria-haspopup="dialog" aria-controls="website-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true"></span>
+            <h4 id="s1-title">Websites for Small Businesses and Enterprises</h4>
+            <p>Fast, mobile-first websites that convert visitors into customers — tailored to your brand and built to scale.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s3-title">
+          <button id="s3-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" data-service="brand-ux" data-service-title="Brand & UX Design" aria-haspopup="dialog" aria-controls="brand-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true"></span>
+            <h4 id="s3-title">Brand & UX Design</h4>
+            <p>Craft a memorable brand and intuitive user experience that builds trust, reduces friction, and increases conversions across devices.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s4-title">
+          <button id="s4-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" data-service="managed-hosting" data-service-title="Managed Hosting & Maintenance" aria-haspopup="dialog" aria-controls="managed-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true"></span>
+            <h4 id="s4-title">Managed Hosting & Maintenance</h4>
+            <p>Managed hosting, automated backups, and proactive maintenance to keep your site fast, secure, and up-to-date.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s5-title">
+          <button id="s5-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" data-service="hardware-support" data-service-title="Hardware Repairs & On-site Support" aria-haspopup="dialog" aria-controls="hardware-types-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true"></span>
+            <h4 id="s5-title">Hardware Repairs & On‑site Support</h4>
+            <p>Fast, professional repairs and on‑site technical support for laptops, desktops and small office networks — minimal downtime guaranteed.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s6-title">
+          <button id="s6-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" data-service="support-plans" data-service-title="Support Plans for Businesses" aria-haspopup="dialog" aria-controls="support-plans-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true"></span>
+            <h4 id="s6-title">Support Plans for Businesses</h4>
+            <p>Priority response, regular updates, and strategic IT guidance — choose a plan that keeps operations running smoothly.</p>
+          </button>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="s2-title">
+          <button id="s2-btn" style="all:unset;cursor:pointer;color:inherit;text-align:left;display:block" type="button" data-service="ecommerce" data-service-title="E-commerce Solutions" aria-haspopup="dialog" aria-controls="ecommerce-backdrop" aria-expanded="false">
+            <span class="media" aria-hidden="true"></span>
+            <h4 id="s2-title">E‑commerce Solutions</h4>
+            <p>Secure, conversion-focused online stores with optimized checkout, payment integrations, and tools to grow your sales quickly.</p>
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <!-- About section (merged content) -->
+    <section id="about" aria-labelledby="about-heading" class="about-hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>We build modern, secure, and elegant digital solutions</h1>
+          <p class="lead">Design, e-commerce, repairs, and support — practical websites that convert and scale. We combine creative design with technical excellence to produce fast, secure, and user-friendly digital experiences.</p>
+          <p><a class="cta-btn" href="#contact">Get a quote</a></p>
+        </div>
+
+        <div class="hero-media" aria-hidden="true">
+          <img src="/images/team-hero.jpg" alt="Team collaborating on a website design">
+        </div>
+      </div>
+
+      <div class="container about-values" aria-labelledby="values-heading">
+        <h2 id="values-heading" style="color:var(--accent);margin-top:18px;">What we do</h2>
+        <div class="values-grid">
+          <article>
+            <h3>Our approach</h3>
+            <p>Strategy-first design, accessibility, and measurable outcomes. We prioritize clarity, performance, and long-term maintainability.</p>
+          </article>
+          <article>
+            <h3>Who we serve</h3>
+            <p>Small businesses, enterprises, legal firms, NGOs, and event-service providers — tailored solutions for each sector's needs.</p>
+          </article>
+
+          <article>
+            <h3>Why choose us</h3>
+            <p>Fast, secure, and easy-to-manage sites with clear ROI and ongoing support to keep your site performing.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="container trust" aria-labelledby="trust-heading">
+        <h2 id="trust-heading" style="color:var(--accent);margin-top:18px;">Trusted by</h2>
+        <div class="trust-logos" role="list" aria-label="Client logos">
+          <img src="/images/logo-client1.svg" alt="Client 1 logo">
+          <img src="/images/logo-client2.svg" alt="Client 2 logo">
+          <img src="/images/logo-client3.svg" alt="Client 3 logo">
+        </div>
+
+        <blockquote class="testimonial">“Breaking Dev Lab delivered a fast, accessible site that doubled our leads.” — Client Name</blockquote>
+      </div>
+
+      <div class="container services" aria-labelledby="services-heading">
+        <h2 id="services-heading" style="color:var(--accent);margin-top:18px;">Core services</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <h4>Web Design</h4>
+            <p>Clear messaging, conversion-focused layouts, and accessible interfaces.</p>
+          </div>
+
+          <div class="service-card">
+            <h4>Managed Hosting</h4>
+            <p>Secure, monitored environments with performance and backups handled for you.</p>
+          </div>
+
+          <div class="service-card">
+            <h4>Support & Maintenance</h4>
+            <p>Ongoing updates, security patches, and rapid response to keep your site healthy.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container final-cta" aria-label="Call to action">
+        <a class="cta-btn" href="#contact">Request a free consultation</a>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <!-- Contact section (merged from contact.html) -->
+    <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+      <div class="container contact-grid">
+        <div class="contact-card" aria-labelledby="contact-heading">
+          <h3 id="contact-heading" style="color:var(--accent);margin-top:0;">Contact Us</h3>
+          <p class="lead" style="margin-top:0;color:var(--muted)">Send a message or request a quote — we’ll reply within 1–2 business days.</p>
+
+          <form id="contact-page-form" action="/api/lead" method="post" class="form-grid" aria-label="Contact form" novalidate>
+            <div>
+              <label for="cp-name">Name</label>
+              <input id="cp-name" name="name" type="text" required placeholder="Your full name" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div>
+              <label for="cp-email">Email</label>
+              <input id="cp-email" name="email" type="email" required placeholder="you@example.com" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div class="full">
+              <label for="cp-message">Message</label>
+              <textarea id="cp-message" name="message" rows="6" placeholder="How can we help?"></textarea>
+            </div>
+
+            <input type="hidden" name="selected_service" id="selected_service" value="" />
+
+            <div class="full form-actions">
+              <button type="submit" class="cta-btn">Send message</button>
+            </div>
+
+            <div class="full">
+              <small style="color:var(--muted)">We respect your privacy. By submitting you agree to be contacted about your request.</small>
+            </div>
+          </form>
+
+          <div id="contact-success" class="success-message" role="status" aria-live="polite" tabindex="-1">Thanks — your message has been received. We'll reply within 1–2 business days.</div>
+        </div>
+
+        <aside class="contact-info" aria-label="Contact information">
+          <div style="margin-bottom:12px">
+            <strong style="color:var(--accent)">Office</strong>
+            <div style="color:var(--muted)">Johannesburg, South Africa</div>
+          </div>
+
+          <div style="margin-bottom:12px">
+            <strong style="color:var(--accent)">Email</strong>
+            <div style="color:var(--muted)">hello@breakingdevlab.example</div>
+          </div>
+
+          <div style="margin-bottom:12px">
+            <strong style="color:var(--accent)">Phone</strong>
+            <div style="color:var(--muted)">+27 11 000 0000</div>
+          </div>
+
+          <div>
+            <strong style="color:var(--accent)">Hours</strong>
+            <div style="color:var(--muted)">Mon–Fri 09:00–17:00 SAST</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section aria-labelledby="quote-heading" style="margin-bottom:28px">
+      <div class="container">
+        <h3 id="quote-heading" class="section-title" style="color:var(--accent);margin:0 0 12px;font-size:1.4rem">Request a Quote</h3>
+
+        <div class="hero-card small">
+          <form id="page-quote-form" class="form-grid" action="/api/quote" method="post" aria-label="Get a quote form" novalidate>
+            <div>
+              <label for="pq-name">Name</label>
+              <input id="pq-name" name="name" type="text" required placeholder="Your full name" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div>
+              <label for="pq-email">Email</label>
+              <input id="pq-email" name="email" type="email" required placeholder="you@example.com" />
+              <div class="field-error" aria-live="polite"></div>
+            </div>
+
+            <div class="full">
+              <label for="pq-project">Project summary</label>
+              <textarea id="pq-project" name="project" rows="5" placeholder="Describe your project, goals, timeline, and budget (if known)"></textarea>
+            </div>
+
+            <input type="hidden" name="selected_service" id="selected_service_quote" value="" />
+
+            <input type="text" name="hp_page" id="hp_page" autocomplete="off" tabindex="-1" hidden aria-hidden="true" />
+
+            <div class="full form-actions">
+              <button type="submit" class="cta-btn">Request quote</button>
+            </div>
+
+            <div class="full">
+              <small style="color:var(--muted)">We respect your privacy. By submitting you agree to be contacted about your request.</small>
+            </div>
+          </form>
+
+          <div class="success-message" id="success" role="status" aria-live="polite" tabindex="-1">Thanks — your request has been received. We'll reply within 1–2 business days.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="padding:20px 0;text-align:center;color:var(--muted);;">
+    <div class="container">
+      <p>&copy; 2025 Breaking Dev Lab. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Website types modal -->
+  <div id="website-types-backdrop" class="types-backdrop" aria-hidden="true">
+    <div class="types-modal" role="dialog" aria-modal="true" aria-labelledby="website-types-title" aria-describedby="website-types-desc">
+      <header>
+        <div>
+          <h3 id="website-types-title">Types of Websites We Build</h3>
+          <p id="website-types-desc" class="lead">Choose the website type that best matches your business. Click "Start a Quote" to request a tailored estimate.</p>
+        </div>
+        <div>
+          <button id="website-types-close" class="btn-outline" type="button" aria-label="Close website types">Close</button>
+        </div>
+      </header>
+
+      <div class="types-list" role="list">
+        <div class="type-item" role="listitem">
+          <h5>Small Business Brochure Sites</h5>
+          <p>Simple, elegant sites to showcase services, hours, and contact details — fast to launch and easy to update.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:small" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Lead Generation & Marketing Sites</h5>
+          <p>Conversion-focused landing pages and multi-page sites built to capture leads and drive campaigns.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:lead-gen" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>E‑commerce & Online Stores</h5>
+          <p>Secure stores with optimized checkout, inventory, and payment integrations for small shops to large catalogs.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="ecommerce:store" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>SaaS & Product Landing Pages</h5>
+          <p>High-performance landing pages and marketing funnels for SaaS, apps, and product launches.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:saaS" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Enterprise & Multi‑site Platforms</h5>
+          <p>Scalable, secure platforms with multi-site management, SSO, integrations and enterprise-grade SLAs.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:enterprise" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Headless CMS & PWAs</h5>
+          <p>Flexible headless architectures and progressive web apps for fast, future-proof digital experiences.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="website-creation:headless" type="button">Start a Quote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-nav" aria-hidden="false">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+        <button data-scroll-target="contact" class="btn-outline">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand modal -->
+  <div id="brand-types-backdrop" class="brand-backdrop" aria-hidden="true">
+    <div class="brand-modal" role="dialog" aria-modal="true" aria-labelledby="brand-types-title" aria-describedby="brand-types-desc">
+      <header>
+        <div>
+          <h3 id="brand-types-title">Brand & UX Design</h3>
+          <p id="brand-types-desc" class="lead">Brand strategy, visual identity, and UX design tailored to your audience and goals.</p>
+        </div>
+        <div>
+          <button id="brand-types-close" class="btn-outline" type="button" aria-label="Close brand types">Close</button>
+        </div>
+      </header>
+
+      <div class="brand-list" role="list">
+        <div class="brand-item" role="listitem">
+          <h5>Identity & Naming</h5>
+          <p>Logo, color systems, and naming that reflect your positioning and scale across touchpoints.</p>
+          <div class="brand-actions">
+            <button class="cta-btn start-quote" data-service="brand:identity" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="brand-item" role="listitem">
+          <h5>UX Research & Prototyping</h5>
+          <p>User research, wireframes, and interactive prototypes to validate flows before development.</p>
+          <div class="brand-actions">
+            <button class="cta-btn start-quote" data-service="brand:ux" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="brand-item" role="listitem">
+          <h5>Design Systems</h5>
+          <p>Reusable components and documentation to keep your product consistent and development-friendly.</p>
+          <div class="brand-actions">
+            <button class="cta-btn start-quote" data-service="brand:design-system" type="button">Start a Quote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+        <button data-scroll-target="contact" class="btn-outline">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ecommerce modal (new) -->
+  <div id="ecommerce-backdrop" class="types-backdrop" aria-hidden="true">
+    <div class="types-modal" role="dialog" aria-modal="true" aria-labelledby="ecommerce-title" aria-describedby="ecommerce-desc">
+      <header>
+        <div>
+          <h3 id="ecommerce-title">E‑commerce Solutions</h3>
+          <p id="ecommerce-desc" class="lead">Options for online stores, marketplaces, and subscription commerce — choose the model that fits your business.</p>
+        </div>
+        <div>
+          <button id="ecommerce-close" class="btn-outline" type="button" aria-label="Close ecommerce types">Close</button>
+        </div>
+      </header>
+
+      <div class="types-list" role="list">
+        <div class="type-item" role="listitem">
+          <h5>Small Shop (Single Vendor)</h5>
+          <p>Simple product catalog, optimized checkout, and payment integrations for small inventories.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="ecommerce:store" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Marketplace</h5>
+          <p>Multi-vendor marketplace architecture with vendor onboarding, commissions, and catalog management.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="ecommerce:marketplace" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Subscription Commerce</h5>
+          <p>Recurring billing, member portals, and subscription lifecycle management for recurring revenue models.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="ecommerce:subscription" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="type-item" role="listitem">
+          <h5>Headless Commerce</h5>
+          <p>API-first storefronts and headless checkout for high-performance, flexible frontends.</p>
+          <div class="type-actions">
+            <button class="cta-btn start-quote" data-service="ecommerce:headless" type="button">Start a Quote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+        <button data-scroll-target="contact" class="btn-outline">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Support plans modal (new) -->
+  <div id="support-plans-backdrop" class="managed-backdrop" aria-hidden="true">
+    <div class="managed-modal" role="dialog" aria-modal="true" aria-labelledby="support-plans-title" aria-describedby="support-plans-desc">
+      <header>
+        <div>
+          <h3 id="support-plans-title">Support Plans for Businesses</h3>
+          <p id="support-plans-desc" class="lead">Choose a support plan that matches your operational needs — from basic coverage to enterprise SLAs.</p>
+        </div>
+        <div>
+          <button id="support-plans-close" class="btn-outline" type="button" aria-label="Close support plans">Close</button>
+        </div>
+      </header>
+
+      <div class="managed-list" role="list">
+        <div class="managed-item" role="listitem">
+          <h5>Basic Support</h5>
+          <p>Email support, monthly maintenance windows, and standard response times.</p>
+          <div class="managed-actions">
+            <button class="cta-btn start-quote" data-service="support-plans:basic" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="managed-item" role="listitem">
+          <h5>Priority Support</h5>
+          <p>Faster response times, scheduled check-ins, and prioritized incident handling.</p>
+          <div class="managed-actions">
+            <button class="cta-btn start-quote" data-service="support-plans:priority" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="managed-item" role="listitem">
+          <h5>Enterprise SLA</h5>
+          <p>Custom SLAs, dedicated account management, on-call engineers, and integration support.</p>
+          <div class="managed-actions">
+            <button class="cta-btn start-quote" data-service="support-plans:enterprise" type="button">Start a Quote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+        <button data-scroll-target="contact" class="btn-outline">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Managed modal -->
+  <div id="managed-types-backdrop" class="managed-backdrop" aria-hidden="true">
+    <div class="managed-modal" role="dialog" aria-modal="true" aria-labelledby="managed-types-title" aria-describedby="managed-types-desc">
+      <header>
+        <div>
+          <h3 id="managed-types-title">Managed Hosting & Maintenance</h3>
+          <p id="managed-types-desc" class="lead">Hosting, backups, monitoring, and maintenance plans to keep your site healthy.</p>
+        </div>
+        <div>
+          <button id="managed-types-close" class="btn-outline" type="button" aria-label="Close managed types">Close</button>
+        </div>
+      </header>
+
+      <div class="managed-list" role="list">
+        <div class="managed-item" role="listitem">
+          <h5>Managed Hosting</h5>
+          <p>Fast, secure hosting with automated backups and monitoring.</p>
+          <div class="managed-actions">
+            <button class="cta-btn start-quote" data-service="managed:hosting" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="managed-item" role="listitem">
+          <h5>Maintenance Plans</h5>
+          <p>Regular updates, security patches, and performance tuning.</p>
+          <div class="managed-actions">
+            <button class="cta-btn start-quote" data-service="managed:maintenance" type="button">Start a Quote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+        <button data-scroll-target="contact" class="btn-outline">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hardware modal -->
+  <div id="hardware-types-backdrop" class="hardware-backdrop" aria-hidden="true">
+    <div class="hardware-modal" role="dialog" aria-modal="true" aria-labelledby="hardware-types-title" aria-describedby="hardware-types-desc">
+      <header>
+        <div>
+          <h3 id="hardware-types-title">Hardware Repairs & On-site Support</h3>
+          <p id="hardware-types-desc" class="lead">Repairs, diagnostics, and on-site support for small offices and home offices.</p>
+        </div>
+        <div>
+          <button id="hardware-types-close" class="btn-outline" type="button" aria-label="Close hardware types">Close</button>
+        </div>
+      </header>
+
+      <div class="hardware-list" role="list">
+        <div class="hardware-item" role="listitem">
+          <h5>Device Repair</h5>
+          <p>Screen, battery, and component repairs with warranty options.</p>
+          <div class="hardware-actions">
+            <button class="cta-btn start-quote" data-service="hardware:repair" type="button">Start a Quote</button>
+          </div>
+        </div>
+
+        <div class="hardware-item" role="listitem">
+          <h5>On-site Support</h5>
+          <p>On-site troubleshooting and setup for small office networks and devices.</p>
+          <div class="hardware-actions">
+            <button class="cta-btn start-quote" data-service="hardware:onsite" type="button">Start a Quote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-nav">
+        <button data-scroll-target="top" class="btn-outline">Home</button>
+        <button data-scroll-target="services" class="btn-outline">Services</button>
+        <button data-scroll-target="about" class="btn-outline">About</button>
+        <button data-scroll-target="contact" class="btn-outline">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interaction script: modal open/close, navigation from modals, and service-card behavior -->
+  <script>
+    (function(){
+      // Open/close helpers
+      function openBackdrop(backdrop, opener) {
+        if (!backdrop) return;
+        backdrop.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        const dialog = backdrop.querySelector('[role="dialog"]');
+        if (!dialog) return;
+        const focusable = dialog.querySelectorAll('a,button,input,textarea,select,[tabindex]:not([tabindex="-1"])');
+        if (focusable.length) focusable[0].focus();
+        if (opener) opener._lastOpener = opener;
+        if (opener) try { opener.setAttribute('aria-expanded','true'); } catch(e){}
+      }
+      function closeBackdrop(backdrop) {
+        if (!backdrop) return;
+        backdrop.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        const opener = document.querySelector('[aria-controls="'+(backdrop && backdrop.id)+'"]');
+        if (opener) try { opener.setAttribute('aria-expanded','false'); opener.focus(); } catch(e){}
+      }
+
+      // Scroll helper
+      function scrollToTarget(targetId) {
+        if (targetId === 'top') {
+          window.scrollTo({top:0, behavior:'smooth'});
+          return;
+        }
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      // Main handler for service-card buttons
+      function onServiceClick(e){
+        const btn = e.currentTarget;
+        const serviceKey = btn.getAttribute('data-service') || '';
+        const serviceTitle = btn.getAttribute('data-service-title') || '';
+        const selectedInput = document.getElementById('selected_service');
+        if (selectedInput) selectedInput.value = serviceKey;
+
+        const controlsId = btn.getAttribute('aria-controls');
+        if (controlsId) {
+          const backdrop = document.getElementById(controlsId);
+          if (backdrop && (backdrop.classList.contains('types-backdrop') || backdrop.classList.contains('brand-backdrop') || backdrop.classList.contains('managed-backdrop') || backdrop.classList.contains('hardware-backdrop') || backdrop.classList.contains('modal-backdrop'))) {
+            openBackdrop(backdrop, btn);
+            return;
+          }
+        }
+
+        // fallback: go to quote form
+        const projectField = document.getElementById('pq-project');
+        if (projectField) {
+          projectField.placeholder = serviceTitle
+            ? `Project summary for: ${serviceTitle} — describe goals, timeline, budget (if known)`
+            : 'Describe your project, goals, timeline, and budget (if known)';
+        }
+        const nameInput = document.getElementById('pq-name');
+        if (nameInput) {
+          nameInput.scrollIntoView({behavior:'smooth', block:'center'});
+          setTimeout(()=>{ try { nameInput.focus(); } catch(e){} }, 420);
+        }
+      }
+
+      // Attach handler to all service-card buttons
+      document.querySelectorAll('.service-card button').forEach(btn=>{
+        btn.addEventListener('click', onServiceClick);
+      });
+
+      // Close buttons inside modals
+      document.querySelectorAll('.types-modal .btn-outline, .brand-modal .btn-outline, .managed-modal .btn-outline, .hardware-modal .btn-outline, .modal .btn-outline').forEach(closeBtn=>{
+        closeBtn.addEventListener('click', function(){
+          const backdrop = closeBtn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
+          closeBackdrop(backdrop);
+        });
+      });
+
+      // Close when clicking backdrop outside dialog
+      document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(backdrop=>{
+        backdrop.addEventListener('click', function(e){
+          if (e.target !== backdrop) return;
+          closeBackdrop(backdrop);
+        });
+      });
+
+      // Start-quote buttons inside modals: close modal and scroll to quote form
+      document.querySelectorAll('.start-quote').forEach(btn=>{
+        btn.addEventListener('click', function(){
+          const serviceKey = btn.getAttribute('data-service') || '';
+          const selectedInput = document.getElementById('selected_service');
+          if (selectedInput) selectedInput.value = serviceKey;
+          const backdrop = btn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
+          if (backdrop) closeBackdrop(backdrop);
+          const nameInput = document.getElementById('pq-name');
+          if (nameInput) {
+            nameInput.scrollIntoView({behavior:'smooth', block:'center'});
+            setTimeout(()=>{ try { nameInput.focus(); } catch(e){} }, 420);
+          }
+        });
+      });
+
+      // Modal nav buttons: scroll to Home/Services/About/Contact
+      document.querySelectorAll('.modal-nav button[data-scroll-target]').forEach(btn=>{
+        btn.addEventListener('click', function(){
+          const target = btn.getAttribute('data-scroll-target');
+          // close any open backdrop
+          const backdrop = btn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
+          if (backdrop) closeBackdrop(backdrop);
+          // scroll to target
+          scrollToTarget(target);
+          // focus the first meaningful element in the target area after a short delay
+          setTimeout(()=> {
+            if (target === 'top') {
+              const first = document.querySelector('header .brand') || document.getElementById('main');
+              if (first) first.focus && first.focus();
+            } else {
+              const el = document.getElementById(target);
+              if (el) {
+                el.setAttribute('tabindex','-1');
+                el.focus();
+                el.removeAttribute('tabindex');
+              }
+            }
+          }, 420);
+        });
+      });
+
+      // Contact form opener/submit handling
+      document.querySelectorAll('form').forEach(form=>{
+        form.addEventListener('submit', function(e){
+          // If you have a backend, remove the next line to allow submission.
+          // e.preventDefault();
+
+          const success = form.id === 'contact-page-form' ? document.getElementById('contact-success') : (form.closest('.hero-card')?.querySelector('.success-message') || document.getElementById('success'));
+          if (success) {
+            success.style.display = 'block';
+            try { success.focus(); } catch(e){}
+          }
+        });
+      });
+
+      // Skip link behavior
+      const skip = document.querySelector('.skip-link');
+      if (skip) {
+        skip.addEventListener('click', function(){
+          const main = document.getElementById('main');
+          if (main) main.setAttribute('tabindex','-1'), main.focus();
+        });
+      }
+
+      // Smooth-scroll behavior for nav links that point to sections
+      document.querySelectorAll('nav.primary a[href^="#"]').forEach(link=>{
+        link.addEventListener('click', function(e){
+          const href = link.getAttribute('href');
+          if (!href || href === '#') return;
+          const targetId = href.replace(/^#/, '');
+          const target = document.getElementById(targetId);
+          if (target) {
+            e.preventDefault();
+            // Close any open backdrops first
+            document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(b=>{
+              if (b.getAttribute('aria-hidden') === 'false') {
+                b.setAttribute('aria-hidden','true');
+              }
+            });
+            document.body.style.overflow = '';
+            target.scrollIntoView({behavior:'smooth', block:'center'});
+            history.replaceState(null, '', '#' + targetId);
+            // focus for accessibility
+            setTimeout(()=> {
+              target.setAttribute('tabindex','-1');
+              target.focus();
+              target.removeAttribute('tabindex');
+            }, 420);
+          }
+        });
+      });
+
+      // If page loads with a hash, focus the target
+      window.addEventListener('load', function(){
+        const hash = location.hash.replace('#','');
+        if (!hash) return;
+        const el = document.getElementById(hash);
+        if (el) {
+          setTimeout(()=> {
+            el.setAttribute('tabindex','-1');
+            el.focus();
+            el.removeAttribute('tabindex');
+          }, 300);
+        }
+      });
+    })();
+  </script>
+
+  <!-- Filter & highlight script for showing relevant types when a service card is clicked -->
+  <style>
+    /* small visual highlight for matched items inside modals */
+    .modal .match {
+      border: 1px solid var(--accent);
+      box-shadow: 0 8px 30px rgba(14,165,164,0.06);
+      transform: translateY(-4px);
+    }
+    .modal .dimmed { display: none; opacity: 0.35; pointer-events: none; }
+  </style>
+
+  <script>
+  (function(){
+    /**
+     * Utility: normalize service keys for matching.
+     * Example: "website-creation:business" -> "website-creation"
+     */
+    function servicePrefix(key){
+      if (!key) return '';
+      return key.split(':')[0].toLowerCase();
+    }
+
+    /**
+     * Filter and highlight items inside a modal/backdrop based on serviceKey.
+     * Looks for .start-quote buttons inside the modal and compares their data-service.
+     */
+    function filterModalItems(backdrop, serviceKey){
+      if (!backdrop) return;
+      // find all actionable items inside the modal (type-item, brand-item, managed-item, hardware-item)
+      const itemSelectors = ['.type-item', '.brand-item', '.managed-item', '.hardware-item'];
+      const items = backdrop.querySelectorAll(itemSelectors.join(','));
+      const prefix = servicePrefix(serviceKey);
+
+      // If no prefix (empty), show everything
+      if (!prefix) {
+        items.forEach(it => {
+          it.classList.remove('match');
+          it.classList.remove('dimmed');
+          it.style.display = '';
+        });
+        return;
+      }
+
+      // For each item, check if it contains a .start-quote with a matching data-service
+      items.forEach(item => {
+        const startBtn = item.querySelector('.start-quote[data-service]');
+        let matches = false;
+        if (startBtn) {
+          const ds = (startBtn.getAttribute('data-service') || '').toLowerCase();
+          // match if same prefix or exact match
+          if (ds === prefix || ds.startsWith(prefix + ':') || ds.startsWith(prefix)) matches = true;
+        }
+        if (matches) {
+          item.classList.add('match');
+          item.classList.remove('dimmed');
+          item.style.display = '';
+        } else {
+          // hide non-matching items to keep focus on relevant types
+          item.classList.remove('match');
+          item.classList.add('dimmed');
+          // you can choose to hide completely instead:
+          // item.style.display = 'none';
+        }
+      });
+    }
+
+    /**
+     * Restore modal items to default (remove filters/highlights).
+     */
+    function restoreModalItems(backdrop){
+      if (!backdrop) return;
+      const itemSelectors = ['.type-item', '.brand-item', '.managed-item', '.hardware-item'];
+      const items = backdrop.querySelectorAll(itemSelectors.join(','));
+      items.forEach(it => {
+        it.classList.remove('match');
+        it.classList.remove('dimmed');
+        it.style.display = '';
+      });
+    }
+
+    // Attach a listener to service-card buttons to filter the modal after it opens.
+    document.querySelectorAll('.service-card button[data-service]').forEach(btn => {
+      btn.addEventListener('click', function(){
+        const serviceKey = btn.getAttribute('data-service') || '';
+        const controlsId = btn.getAttribute('aria-controls');
+        if (!controlsId) return;
+        const backdrop = document.getElementById(controlsId);
+        if (!backdrop) return;
+
+        // Wait a short moment for the modal to open (your existing script opens it)
+        setTimeout(() => {
+          filterModalItems(backdrop, serviceKey);
+          // set aria-expanded on the opener for accessibility
+          try { btn.setAttribute('aria-expanded','true'); } catch(e){}
+        }, 60);
+      });
+    });
+
+    // When modal close buttons are clicked, restore the modal items and update aria-expanded
+    document.querySelectorAll('.types-modal .btn-outline, .brand-modal .btn-outline, .managed-modal .btn-outline, .hardware-modal .btn-outline, .modal .btn-outline').forEach(closeBtn => {
+      closeBtn.addEventListener('click', function(){
+        const backdrop = closeBtn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
+        if (backdrop) restoreModalItems(backdrop);
+        // restore aria-expanded on the opener if we can find it
+        const opener = document.querySelector('[aria-controls="'+(backdrop && backdrop.id)+'"]');
+        if (opener) try { opener.setAttribute('aria-expanded','false'); } catch(e){}
+      });
+    });
+
+    // Also restore when clicking the backdrop outside the dialog
+    document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(backdrop => {
+      backdrop.addEventListener('click', function(e){
+        if (e.target !== backdrop) return;
+        restoreModalItems(backdrop);
+        const opener = document.querySelector('[aria-controls="'+backdrop.id+'"]');
+        if (opener) try { opener.setAttribute('aria-expanded','false'); } catch(e){}
+      });
+    });
+
+    // If user uses the modal's internal nav to go elsewhere, clear filters too
+    document.querySelectorAll('.modal-nav button[data-scroll-target]').forEach(btn=>{
+      btn.addEventListener('click', function(){
+        const backdrop = btn.closest('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop');
+        if (backdrop) restoreModalItems(backdrop);
+      });
+    });
+
+    // Optional: when a Start-Quote inside a modal is clicked, ensure the selected_service hidden input is set
+    document.querySelectorAll('.start-quote[data-service]').forEach(sbtn=>{
+      sbtn.addEventListener('click', function(){
+        const serviceKey = sbtn.getAttribute('data-service') || '';
+        const selectedInput = document.getElementById('selected_service') || document.getElementById('selected_service_quote');
+        if (selectedInput) selectedInput.value = serviceKey;
+      });
+    });
+
+  })();
+  </script>
+
+  <script src="/assets/js/tiny-fixes.js" defer></script>
+</body>
+</html>
