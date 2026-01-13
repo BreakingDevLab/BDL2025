@@ -418,7 +418,6 @@
             <h3>Our approach</h3>
             <p>Strategy-first design, accessibility, and measurable outcomes. We prioritize clarity, performance, and long-term maintainability.</p>
           </article>
-
           <article>
             <h3>Who we serve</h3>
             <p>Small businesses, enterprises, legal firms, NGOs, and event-service providers — tailored solutions for each sector's needs.</p>
@@ -1061,36 +1060,6 @@
               target.removeAttribute('tabindex');
             }, 420);
           }
-        });
-      });
-
-      // Home link handler — smooth-scroll to top and restore focus
-      document.querySelectorAll('nav.primary a[href="#top"], nav.primary a[href="/"], nav.primary a[href=""], nav.primary a[href="/index.html"]').forEach(link=>{
-        link.addEventListener('click', function(e){
-          e.preventDefault();
-          // Close any open modal/backdrop first
-          document.querySelectorAll('.types-backdrop, .brand-backdrop, .managed-backdrop, .hardware-backdrop, .modal-backdrop').forEach(b=>{
-            if (b.getAttribute('aria-hidden') === 'false') {
-              b.setAttribute('aria-hidden','true');
-            }
-          });
-          // Unlock scrolling if it was locked
-          document.body.style.overflow = '';
-
-          // Smooth scroll to top
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-
-          // After scroll, focus the brand for accessibility
-          setTimeout(() => {
-            const brand = document.querySelector('header .brand') || document.getElementById('top') || document.getElementById('main');
-            if (brand) {
-              brand.setAttribute('tabindex','-1');
-              brand.focus({ preventScroll: true });
-              brand.removeAttribute('tabindex');
-            }
-            // update URL fragment without adding history entry
-            history.replaceState(null, '', '#top');
-          }, 420);
         });
       });
 
