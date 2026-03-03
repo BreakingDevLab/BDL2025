@@ -1,0 +1,12 @@
+/* Visual area logo styles - inserted by script */
+.site-logo { display:block; text-align:center; margin:0 auto; }
+.visual-logo {
+  display:inline-block;
+  max-width: 100%;
+  height: auto;
+  width: 220px;
+  box-sizing: border-box;
+}
+.visual-area .site-logo { position: relative; top: 0; }
+@media (max-width: 768px) { .visual-logo { width: 160px; } }
+@media (max-width: 480px) { .visual-logo { width: 120px; } }
