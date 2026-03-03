@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Breaking Dev Lab — About</title>
+  <meta name="description" content="Breaking Dev Lab builds modern, secure, and elegant digital solutions — web design, e-commerce, repairs, and support." />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:;">
+
+  <style>
+    :root{
+      --max-width:1100px;
+      --accent:#0ea5a4;
+      --accent-2:#0b8790;
+      --muted:#bfc7cc;
+      --text:#e9f1f4;
+      --panel:#071018;
+      --glass-border:rgba(255,255,255,0.04);
+      --radius:12px;
+      --card-shadow:0 10px 30px rgba(2,6,23,0.6);
+    }
+
+    html{box-sizing:border-box;scroll-behavior:smooth}
+    *,*::before,*::after{box-sizing:inherit}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,system-ui,-apple-system,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,rgba(6,6,8,0.86),rgba(6,6,8,0.86)),url('/images/tech_bg.jpg') center/cover fixed no-repeat;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:1000;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(8,10,12,0.6),rgba(8,10,12,0.35));border-bottom:1px solid var(--glass-border)}
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--accent)}
+    .brand .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:inline-grid;place-items:center;font-weight:800;color:#042022}
+    .brand h1{font-size:1rem;margin:0;color:#eaf9f8}
+    nav.primary{display:flex;gap:18px;align-items:center}
+    nav.primary a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 6px;border-radius:6px}
+    nav.primary a[aria-current="page"]{color:var(--text);font-weight:700}
+
+    /* About hero and layout */
+    .about-hero{padding:56px 0}
+    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+    .hero-copy h1{color:var(--accent);margin:0 0 8px;font-size:2rem}
+    .lead{color:var(--muted);margin:0 0 18px;font-size:1.02rem}
+    .hero-media img{width:100%;border-radius:10px;object-fit:cover;display:block;box-shadow:var(--card-shadow)}
+
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+    .values-grid article{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+    .values-grid h3{margin:0 0 8px;color:var(--accent)}
+
+    .trust{padding:18px 0}
+    .trust-logos{display:flex;gap:18px;align-items:center;opacity:.95;margin-bottom:12px}
+    .trust-logos img{height:36px;object-fit:contain;filter:grayscale(1) opacity(.9)}
+    .testimonial{margin:0;color:var(--muted);font-style:italic}
+
+    .services{margin:28px 0}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:12px}
+    .service-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(0,0,0,0.35)}
+    .service-card h4{margin:0 0 8px;color:var(--accent)}
+
+    .final-cta{display:flex;justify-content:center;padding:28px 0}
+
+    /* Buttons */
+    .cta-btn {
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 18px;border-radius:10px;font-weight:700;
+      color:#042022;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border:0;cursor:pointer;text-decoration:none;box-shadow:0 8px 30px rgba(11,135,144,0.12);
+      transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    }
+    .cta-btn:hover,.cta-btn:focus{transform:translateY(-3px);box-shadow:0 18px 50px rgba(11,135,144,0.14);filter:brightness(1.02)}
+
+    /* Skip link */
+    .skip-link{
+      position:absolute;
+      left:-9999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:12px;
+      top:12px;
+      width:auto;
+      height:auto;
+      padding:8px 12px;
+      background:#042022;
+      color:var(--text);
+      border-radius:6px;
+      z-index:2000;
+    }
+
+    /* Responsive */
+    @media (max-width:960px){
+      .hero-grid{grid-template-columns:1fr}
+      .values-grid{grid-template-columns:1fr}
+    }
+
+    a:focus,button:focus{outline:3px solid rgba(14,165,164,0.12);outline-offset:3px;border-radius:8px}
+  </style>
+</head>
+
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-wrap" role="navigation" aria-label="Main navigation">
+      <a class="brand" href="test%201.html" aria-label="Breaking Dev Lab home">
+        <span class="logo">BD</span>
+        <div>
+          <h1>Breaking Dev Lab</h1>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Modern digital solutions</div>
+        </div>
+      </a>
+
+      <nav class="primary" aria-label="Primary">
+        <a href="test%201.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main id="main">
+    <section class="about-hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>We build modern, secure, and elegant digital solutions</h1>
+          <p class="lead">Design, e-commerce, repairs, and support — practical websites that convert and scale. We combine creative design with technical excellence to produce fast, secure, and user-friendly digital experiences.</p>
+          <p><a class="cta-btn" href="contact.html">Get a quote</a></p>
+        </div>
+
+        <div class="hero-media" aria-hidden="true">
+          <!-- Replace with a real image path or keep as decorative -->
+          <img src="/images/team-hero.jpg" alt="Team collaborating on a website design">
+        </div>
+      </div>
+    </section>
+
+    <section class="about-values container" aria-labelledby="values-heading">
+      <h2 id="values-heading" style="color:var(--accent);margin-top:0;">What we do</h2>
+      <div class="values-grid">
+        <article>
+          <h3>Our approach</h3>
+          <p>Strategy-first design, accessibility, and measurable outcomes. We prioritize clarity, performance, and long-term maintainability.</p>
+        </article>
+
+        <article>
+          <h3>Who we serve</h3>
+          <p>Small businesses, enterprises, legal firms, NGOs, and event-service providers — tailored solutions for each sector's needs.</p>
+        </article>
+
+        <article>
+          <h3>Why choose us</h3>
+          <p>Fast, secure, and easy-to-manage sites with clear ROI and ongoing support to keep your site performing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="trust container" aria-labelledby="trust-heading">
+      <h2 id="trust-heading" style="color:var(--accent);margin-top:0;">Trusted by</h2>
+      <div class="trust-logos" role="list" aria-label="Client logos">
+        <!-- Replace these with real client logo files -->
+        <img src="/images/logo-client1.svg" alt="Client 1 logo">
+        <img src="/images/logo-client2.svg" alt="Client 2 logo">
+        <img src="/images/logo-client3.svg" alt="Client 3 logo">
+      </div>
+
+      <blockquote class="testimonial">“Breaking Dev Lab delivered a fast, accessible site that doubled our leads.” — Client Name</blockquote>
+    </section>
+
+    <section class="services container" aria-labelledby="services-heading">
+      <h2 id="services-heading" style="color:var(--accent);margin-top:0;">Core services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h4>Web Design</h4>
+          <p>Clear messaging, conversion-focused layouts, and accessible interfaces.</p>
+        </div>
+
+        <div class="service-card">
+          <h4>Managed Hosting</h4>
+          <p>Secure, monitored environments with performance and backups handled for you.</p>
+        </div>
+
+        <div class="service-card">
+          <h4>Support & Maintenance</h4>
+          <p>Ongoing updates, security patches, and rapid response to keep your site healthy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container final-cta" aria-label="Call to action">
+      <a class="cta-btn" href="contact.html">Request a free consultation</a>
+    </section>
+  </main>
+
+  <footer style="padding:20px 0;text-align:center;color:var(--muted);">
+    <div class="container">
+      <p>&copy; 2025 Breaking Dev Lab. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Smooth-scroll behavior for Services link when on the About page -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Select the Services link in the primary nav (matches services.html or any href containing "services")
+      const servicesLink = document.querySelector('nav.primary a[href$="services.html"], nav.primary a[href*="services"]');
+      if (!servicesLink) return;
+
+      servicesLink.addEventListener('click', function (e) {
+        // The target on this page is the element with id "services-heading"
+        const target = document.getElementById('services-heading') || document.getElementById('services');
+        // Detect About page paths; adjust if your filename differs
+        const path = location.pathname.replace(/\/+$/, '');
+        const onAboutPage = path.endsWith('/about.html') || path.endsWith('/about') || path === '/about' || path.endsWith('about.html');
+
+        if (target && onAboutPage) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Update the URL fragment for sensible back/refresh behavior
+          history.replaceState(null, '', '#' + target.id);
+          // Move focus to the heading for accessibility
+          target.setAttribute('tabindex', '-1');
+          target.focus({ preventScroll: true });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
